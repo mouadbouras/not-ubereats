@@ -16,7 +16,7 @@ import Location from './location';
 
 import styles from './restaurant.module.css';
 
-export default ({ restaurants, searchTerm }) => {
+export default ({ restaurants, searchTerm, showDelivery }) => {
   const [filteredRestaurants, setFilteredRestaurants] = useState(restaurants);
   const currentDayofWeek = new Date().toLocaleString('en-us', { weekday: 'long' });
   const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -92,6 +92,12 @@ export default ({ restaurants, searchTerm }) => {
       currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.isOpen);
     }
 
+    if (showDelivery) {
+      currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.hasDelivery);
+    } else {
+      currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.hasPickup);
+    }
+
     if (!location && !searchTerm) {
       setFilteredRestaurants(currentRestaurants);
       return;
@@ -115,7 +121,7 @@ export default ({ restaurants, searchTerm }) => {
   useEffect(() => {
     sortRestaurants();
     setCount(1);
-  }, [searchTerm, location, showOpenOnly]);
+  }, [searchTerm, location, showOpenOnly, showDelivery]);
 
   useEffect(() => {
     loopThroughPosts(count);
