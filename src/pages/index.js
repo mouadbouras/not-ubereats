@@ -1,17 +1,16 @@
-import React from 'react';
-import App from '../components/app';
+import React from "react";
+import App from "../components/app";
+import { graphql } from "gatsby";
 
-const Main = ({data}) => {
-  return (
-    <App data={data}></App>
-  );
+const Main = ({ data }) => {
+  return <App data={data}></App>;
 };
 
 export default Main;
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulRestaurant(filter: {city: {eq: "Toronto"}}) {
+    allContentfulRestaurant {
       edges {
         node {
           name

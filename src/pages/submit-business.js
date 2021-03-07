@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Autocomplete from 'react-google-autocomplete';
-import DateGroup from '../components/date-group';
-import Footer from '../components/footer';
-import Nav from '../components/nav';
+import React, { useState } from "react";
+import { graphql } from "gatsby";
+import { Helmet } from "react-helmet";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Autocomplete from "react-google-autocomplete";
+import DateGroup from "../components/date-group";
+import Footer from "../components/footer";
+import Nav from "../components/nav";
 
 const SubmitBusinessPage = ({ data }) => {
   const [validated, setValidated] = useState(false);
@@ -24,10 +24,10 @@ const SubmitBusinessPage = ({ data }) => {
       if (files[0].size > 500 * 1024 || !hasImageFile.test(files[0].type)) {
         // Check the constraint
         event.currentTarget.setCustomValidity(
-          'The selected file must not be larger than 500 kB and must be either jpg or png.'
+          "The selected file must not be larger than 500 kB and must be either jpg or png."
         );
       } else {
-        event.currentTarget.setCustomValidity('');
+        event.currentTarget.setCustomValidity("");
       }
     }
   };
@@ -47,7 +47,10 @@ const SubmitBusinessPage = ({ data }) => {
       <Helmet>
         <html lang="en" />
         <title>Submit a Business</title>
-        <meta name="description" content={data.site.siteMetadata.description}></meta>
+        <meta
+          name="description"
+          content={data.site.siteMetadata.description}
+        ></meta>
       </Helmet>
       <div className="bg-light">
         <Nav />
@@ -73,8 +76,15 @@ const SubmitBusinessPage = ({ data }) => {
                 <input type="hidden" name="form-name" value="business" />
                 <Form.Group controlId="name">
                   <Form.Label>Restaurant Name</Form.Label>
-                  <Form.Control type="text" placeholder="Name" name="name" required />
-                  <Form.Control.Feedback type="invalid">Restaurant Name is required</Form.Control.Feedback>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Restaurant Name is required
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="description">
                   <Form.Label>Description - 250 character limit</Form.Label>
@@ -96,8 +106,8 @@ const SubmitBusinessPage = ({ data }) => {
                     apiKey={process.env.GATSBY_GOOGLE_PLACES_KEY}
                     className="form-control mt-2"
                     aria-label="Address"
-                    types={['address']}
-                    componentRestrictions={{ country: 'ca' }}
+                    types={["address"]}
+                    componentRestrictions={{ country: "ca" }}
                     name="address"
                     id="address"
                     required
@@ -107,17 +117,54 @@ const SubmitBusinessPage = ({ data }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Label>Delivery Hours</Form.Label>
-                <DateGroup name="Monday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Tuesday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Wednesday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Thursday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Friday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Saturday" checked={checked} setChecked={setChecked}></DateGroup>
-                <DateGroup name="Sunday" checked={checked} setChecked={setChecked}></DateGroup>
-                <Form.Control.Feedback type="invalid">Please select delivery hours.</Form.Control.Feedback>
+                <DateGroup
+                  name="Monday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Tuesday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Wednesday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Thursday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Friday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Saturday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <DateGroup
+                  name="Sunday"
+                  checked={checked}
+                  setChecked={setChecked}
+                ></DateGroup>
+                <Form.Control.Feedback type="invalid">
+                  Please select delivery hours.
+                </Form.Control.Feedback>
                 <Form.Group controlId="link">
-                  <Form.Label>Link to website - (Please use https if possible)</Form.Label>
-                  <Form.Control type="URL" placeholder="https://www.mysite.com" name="link" required />
+                  <Form.Label>
+                    Link to website - (Please use https if possible)
+                  </Form.Label>
+                  <Form.Control
+                    type="URL"
+                    placeholder="https://www.mysite.com"
+                    name="link"
+                    required
+                  />
                   <Form.Control.Feedback type="invalid">
                     Link is required. Please include https://
                   </Form.Control.Feedback>
@@ -180,7 +227,8 @@ const SubmitBusinessPage = ({ data }) => {
                     Please include an image(jpg/png) 500 kB or less.
                   </Form.Control.Feedback>
                   <Form.Text className="text-muted">
-                    Please include a high quality image to appear on the site. No logos or images with lots of text.
+                    Please include a high quality image to appear on the site.
+                    No logos or images with lots of text.
                   </Form.Text>
                 </Form.Group>
                 <Form.Group controlId="agree">

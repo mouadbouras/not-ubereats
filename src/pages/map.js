@@ -1,12 +1,12 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed';
-import Nav from '../components/nav';
+import React from "react";
+import { Helmet } from "react-helmet";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import ResponsiveEmbed from "react-bootstrap/ResponsiveEmbed";
+import Nav from "../components/nav";
 
-import styles from './map.module.css';
+import styles from "./map.module.css";
 
 export default () => (
   <main>
@@ -28,8 +28,12 @@ export default () => (
             ></iframe>
           </ResponsiveEmbed>
           <p className="mt-4">
-            Note for a better experience check out the{' '}
-            <a target="_blank" rel="noopener noreferrer" href="https://go.mapstr.com/notUberEats">
+            Note for a better experience check out the{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://go.mapstr.com/notUberEats"
+            >
               full version here
             </a>
           </p>

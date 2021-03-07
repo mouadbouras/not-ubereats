@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import Img from 'gatsby-image';
-import classnames from 'classnames';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import haversine from 'haversine-distance';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
-import Autocomplete from 'react-google-autocomplete';
-import Location from './location';
+import React, { useState, useEffect } from "react";
+import Img from "gatsby-image";
+import classnames from "classnames";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import haversine from "haversine-distance";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import Autocomplete from "react-google-autocomplete";
+import Location from "./location";
 
-import styles from './restaurant.module.css';
+import styles from "./restaurant.module.css";
 
 export default ({ restaurants, searchTerm, showDelivery }) => {
   const [filteredRestaurants, setFilteredRestaurants] = useState(restaurants);
-  const currentDayofWeek = new Date().toLocaleString('en-us', { weekday: 'long' });
-  const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  const currentDayofWeek = new Date().toLocaleString("en-us", {
+    weekday: "long",
+  });
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
   const restaurantsPerPage = 9;
   const [restaurantsToShow, setRestaurantsToShow] = useState([]);
   const [count, setCount] = useState(1);
@@ -33,17 +39,25 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
       return false;
     }
     if (deliveryHours.length > 0) {
-      const hours = deliveryHours[0].Everyday || deliveryHours[0][currentDayofWeek];
+      const hours =
+        deliveryHours[0].Everyday || deliveryHours[0][currentDayofWeek];
       if (hours) {
         if (hours.open <= currentTime && hours.closed > currentTime) {
           return true;
         }
         // If restaurant closes past midnight
-        else if (parseInt(currentTime.charAt(0)) > 0 && parseInt(hours.closed.charAt(0)) === 0) {
+        else if (
+          parseInt(currentTime.charAt(0)) > 0 &&
+          parseInt(hours.closed.charAt(0)) === 0
+        ) {
           return true;
         }
         // If currently past midnight and the restaurant is still open
-        else if (parseInt(currentTime.charAt(0)) === 0 && hours.closed > currentTime && hours.closed < hours.open) {
+        else if (
+          parseInt(currentTime.charAt(0)) === 0 &&
+          hours.closed > currentTime &&
+          hours.closed < hours.open
+        ) {
           return true;
         }
         return false;
@@ -69,8 +83,10 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
 
   const distance = ({ lat, lon }) => {
     const distance =
-      haversine({ latitude: location.latitude, longitude: location.longitude }, { latitude: lat, longitude: lon }) /
-      1000;
+      haversine(
+        { latitude: location.latitude, longitude: location.longitude },
+        { latitude: lat, longitude: lon }
+      ) / 1000;
     return Math.round((distance + Number.EPSILON) * 10) / 10;
   };
 
@@ -89,13 +105,19 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
     });
 
     if (showOpenOnly) {
-      currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.isOpen);
+      currentRestaurants = currentRestaurants.filter(
+        (restaurant) => restaurant.node.isOpen
+      );
     }
 
     if (showDelivery) {
-      currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.hasDelivery);
+      currentRestaurants = currentRestaurants.filter(
+        (restaurant) => restaurant.node.hasDelivery
+      );
     } else {
-      currentRestaurants = currentRestaurants.filter((restaurant) => restaurant.node.hasPickup);
+      currentRestaurants = currentRestaurants.filter(
+        (restaurant) => restaurant.node.hasPickup
+      );
     }
 
     if (!location && !searchTerm) {
@@ -105,16 +127,25 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
     if (searchTerm) {
       currentRestaurants = currentRestaurants.filter(
         (restaurant) =>
-          restaurant.node.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          restaurant.node.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+          restaurant.node.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          restaurant.node.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       );
     }
     if (!location) {
       setFilteredRestaurants(currentRestaurants);
       return;
     }
-    currentRestaurants.forEach((restaurant) => (restaurant.node.distance = distance(restaurant.node.location)));
-    currentRestaurants = currentRestaurants.sort((a, b) => a.node.distance - b.node.distance);
+    currentRestaurants.forEach(
+      (restaurant) =>
+        (restaurant.node.distance = distance(restaurant.node.location))
+    );
+    currentRestaurants = currentRestaurants.sort(
+      (a, b) => a.node.distance - b.node.distance
+    );
     setFilteredRestaurants(currentRestaurants);
   };
 
@@ -128,7 +159,9 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
   }, [location, count, filteredRestaurants]);
 
   const createMapUrl = (restaurant) => {
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.name)}+toronto`;
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      restaurant.name
+    )}+Montreal`;
   };
 
   return (
@@ -141,7 +174,10 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
       <Row className="mb-4">
         <Col>
           <div className="d-flex">
-            <Location setLocation={setLocation} setLocationError={setLocationError}></Location>
+            <Location
+              setLocation={setLocation}
+              setLocationError={setLocationError}
+            ></Location>
             <ToggleButtonGroup className="ml-1" type="checkbox">
               <ToggleButton
                 type="checkbox"
@@ -155,12 +191,19 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
             </ToggleButtonGroup>
           </div>
           <div>
-            <Button className="pl-0" onClick={() => setShowAddressBar(true)} variant="link" type="submit" size="sm">
+            <Button
+              className="pl-0"
+              onClick={() => setShowAddressBar(true)}
+              variant="link"
+              type="submit"
+              size="sm"
+            >
               Not home? Enter address
             </Button>
             {hasLocationError && (
-              <span className={classnames('invalid-feedback', styles.warning)}>
-                Please enable location services on your device or try entering your address below:
+              <span className={classnames("invalid-feedback", styles.warning)}>
+                Please enable location services on your device or try entering
+                your address below:
               </span>
             )}
             {(showAddressBar || hasLocationError) && (
@@ -169,24 +212,46 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
                 className="form-control mt-2"
                 aria-label="Enter a location"
                 onPlaceSelected={(place) => {
-                  setLocation({ latitude: place.geometry.location.lat(), longitude: place.geometry.location.lng() });
+                  setLocation({
+                    latitude: place.geometry.location.lat(),
+                    longitude: place.geometry.location.lng(),
+                  });
                 }}
-                types={['address']}
-                componentRestrictions={{ country: 'ca' }}
+                types={["address"]}
+                componentRestrictions={{ country: "ca" }}
               />
             )}
           </div>
         </Col>
       </Row>
-      <Row as="ul" className="pl-0" role="region" aria-live="polite" aria-relevant="additions removals">
+      <Row
+        as="ul"
+        className="pl-0"
+        role="region"
+        aria-live="polite"
+        aria-relevant="additions removals"
+      >
         {restaurantsToShow.map(({ node }) => {
           const restaurant = node;
           return (
-            <Col as="li" className="mb-4 d-flex align-items-stretch" lg={4} key={restaurant.name}>
+            <Col
+              as="li"
+              className="mb-4 d-flex align-items-stretch"
+              lg={4}
+              key={restaurant.name}
+            >
               <Card className="shadow-sm">
-                <a aria-hidden="true" target="_blank" rel="noreferrer" href={restaurant.link}>
+                <a
+                  aria-hidden="true"
+                  target="_blank"
+                  rel="noreferrer"
+                  href={restaurant.link}
+                >
                   <Img
-                    className={classnames('card-img-top', styles.restaurantImage)}
+                    className={classnames(
+                      "card-img-top",
+                      styles.restaurantImage
+                    )}
                     alt=""
                     fluid={restaurant.image.fluid}
                   />
@@ -194,7 +259,12 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
                 <Card.Body>
                   <div className="d-flex justify-content-between">
                     <div className="d-flex flex-column align-items-start">
-                      <a target="_blank" rel="noreferrer" className="h5 card-title btn-link" href={restaurant.link}>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        className="h5 card-title btn-link"
+                        href={restaurant.link}
+                      >
                         {restaurant.name}
                       </a>
                       {restaurant.isOpen && (
@@ -204,7 +274,11 @@ export default ({ restaurants, searchTerm, showDelivery }) => {
                       )}
                     </div>
                     <div className="d-flex align-items-start">
-                      {location && <p className={styles.distance}>{distance(restaurant.location)} km</p>}
+                      {location && (
+                        <p className={styles.distance}>
+                          {distance(restaurant.location)} km
+                        </p>
+                      )}
                       <a
                         className="h5 card-title btn-link"
                         title="View on map"

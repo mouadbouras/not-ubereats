@@ -1,13 +1,18 @@
-import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import React from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 
-const DeliveryToggle = ({showDelivery, setShowDelivery}) => (
+const DeliveryToggle = ({ showDelivery, setShowDelivery }) => (
   <Row>
     <Col className="d-flex justify-content-center mb-2">
-      <ToggleButtonGroup className="ml-1" type="radio" value={showDelivery} name="options">
+      <ToggleButtonGroup
+        className="ml-1"
+        type="radio"
+        value={showDelivery}
+        name="options"
+      >
         <ToggleButton
           type="radio"
           variant="outline-secondary"

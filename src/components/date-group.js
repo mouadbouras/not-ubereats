@@ -1,12 +1,12 @@
-import React from 'react';
-import TimePicker from 'rc-time-picker';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import 'rc-time-picker/assets/index.css';
+import React from "react";
+import TimePicker from "rc-time-picker";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "rc-time-picker/assets/index.css";
 
 export default ({ name, checked, setChecked }) => {
-  const format = 'h:mm a';
+  const format = "h:mm a";
 
   return (
     <Row>

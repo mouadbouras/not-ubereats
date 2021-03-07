@@ -1,11 +1,10 @@
-
 .icon {
   height: 200px;
 }
 
 .button {
-  background: #D15018;
-  border-color: #D15018;
+  background: #d15018;
+  border-color: #d15018;
 }
 
 @media (max-width: 767.98px) {
@@ -15,7 +14,7 @@
   }
 
   .container {
-    text-align: center!important;
+    text-align: center !important;
   }
 
   .subtitle {
